@@ -1,0 +1,68 @@
+{
+  "name": "lambda-base",
+  "engines": {
+    "node": "8.11.2"
+  },
+  "scripts": {
+    "build": "mkdir -p build && babel src -d build --copy-files",
+    "precommit": "lint-staged",
+    "deploy:dev": "export NODE_ENV=dev && serverless deploy -v --aws-profile PROFILEDEV",
+    "deploy:prod": "export NODE_ENV=prod && serverless deploy -v --aws-profile PROFILEPROD",
+    "dev": "npm-watch",
+    "serve": "export NODE_ENV=dev && serverless offline start --skipCacheInvalidation",
+    "create-profiles": "serverless config credentials --provider aws --key KEYDEV --secret SECRETDEV --profile PROFILEDEV -o && serverless config credentials --provider aws --key KEYPROD --secret SECRETDEV --profile PROFILEPROD -o"
+  },
+  "watch": {
+    "build": "src/**/*.*",
+    "serve": "src/**/*.*"
+  },
+  "dependencies": {
+    "@google-cloud/debug-agent": "^2.3.2",
+    "@google-cloud/pubsub": "^0.22.2",
+    "@google-cloud/trace-agent": "^2.4.0",
+    "aws-serverless-express": "^3.3.5",
+    "babel-polyfill": "^6.26.0",
+    "body-parser": "^1.18.3",
+    "btoa": "^1.2.1",
+    "config": "^3.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.16.2",
+    "helmet": "^3.15.0",
+    "isomorphic-fetch": "^2.2.1",
+    "joi": "^14.3.0",
+    "serverless-http": "^1.9.1",
+    "uuid": "^3.3.2",
+    "xml2js": "^0.4.19"
+  },
+  "private": true,
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.0.20",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "claudia": "^5.4.0",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "7.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jest": "^22.0.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "husky": "^1.1.3",
+    "lint-staged": "^8.0.4",
+    "nodemon": "^1.18.3",
+    "npm-watch": "^0.3.0",
+    "prettier": "^1.14.3",
+    "serverless-offline": "^4.9.0"
+  },
+  "lint-staged": {
+    "src/*.{js}": [
+      "prettier --write --single-quote --no-semi",
+      "eslint --fix",
+      "git add"
+    ]
+  }
+}
